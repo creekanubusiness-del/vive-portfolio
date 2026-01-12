@@ -3,65 +3,79 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VIVE — Summertime Map Mode</title>
+<title>VIVE — Summer City Portfolio</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
-  font-family: 'Trebuchet MS', sans-serif;
-  background:#000;
   overflow:hidden;
+  font-family:sans-serif;
 }
 
-/* Map */
+/* Map (placeholder) — replace with SS map */
 #map{
   position:fixed;
   inset:0;
-  background:url('https://i.imgur.com/iY7K6sq.jpg') center/cover no-repeat;
-  animation:slowpan 60s linear infinite alternate;
+  background:url('https://i.imgur.com/bwz4x2b.jpeg') center/cover no-repeat;
+  animation:pan 50s linear infinite alternate;
 }
-@keyframes slowpan{
-  from{transform:scale(1.02) translate(0,0);}
-  to{transform:scale(1.05) translate(-2%, -2%);}
+@keyframes pan{
+  from{transform:scale(1) translate(0,0);}
+  to{transform:scale(1.05) translate(-3%, -3%);}
 }
 
-/* Buttons for map locations */
-.location{
+/* Moving car */
+.car{
   position:absolute;
-  padding:8px 14px;
-  background:#ffffffbb;
-  border-radius:12px;
+  width:60px;
+  height:30px;
+  background:url('https://i.imgur.com/GT3u7dW.png') center/contain no-repeat;
+  animation:drive 12s linear infinite;
+  filter:drop-shadow(0 0 4px #000);
+}
+@keyframes drive{
+  0%{left:-10%;top:65%;}
+  50%{left:110%;top:62%;}
+  100%{left:-10%;top:65%;}
+}
+
+/* Location buttons */
+.loc{
+  position:absolute;
+  padding:10px 14px;
+  background:#ffffffcc;
+  border-radius:10px;
+  font-weight:bold;
   cursor:pointer;
-  font-weight:700;
   transition:.2s;
 }
-.location:hover{transform:scale(1.08);background:#fff}
+.loc:hover{transform:scale(1.1);background:#fff}
 
-/* Approx map layout */
-#home{top:60%;left:30%;}
-#school{top:28%;left:62%;}
-#park{top:42%;left:20%;}
-#mall{top:70%;left:70%;}
+/* Positions (rough) */
+#home{top:70%;left:30%;}
+#school{top:45%;left:65%;}
+#mall{top:60%;left:75%;}
+#park{top:40%;left:20%;}
 
-/* Popup panel */
+/* Popup */
 #panel{
   position:fixed;
   bottom:0;
   left:50%;
   transform:translateX(-50%);
-  width:100%;
-  max-width:480px;
-  background:#ffffffdd;
-  padding:20px;
-  border-radius:20px 20px 0 0;
+  width:95%;
+  max-width:430px;
+  background:#fff;
+  border-radius:18px 18px 0 0;
   text-align:center;
-  color:#111;
+  padding:20px;
   display:none;
-  animation:slide .4s ease;
+  animation:slide .35s ease;
 }
-@keyframes slide{from{transform:translate(-50%,100%);}to{transform:translate(-50%,0);}}
-
-/* Close button */
+@keyframes slide{
+  from{transform:translate(-50%,100%);}
+  to{transform:translate(-50%,0);}
+}
 #close{
   margin-top:12px;
   padding:6px 12px;
@@ -70,34 +84,32 @@ body{
   border-radius:8px;
   cursor:pointer;
 }
-#close:hover{background:#000}
 
-/* Title overlay */
 header{
   position:fixed;
-  top:10px;
+  top:12px;
   width:100%;
   text-align:center;
   color:#fff;
-  text-shadow:0 0 5px #000;
-  font-size:1.7rem;
+  font-size:1.8rem;
   font-weight:900;
+  text-shadow:0 2px 5px #000;
 }
 </style>
 </head>
 <body>
 
-<header>🏖 VIVE — SUMMER CITY</header>
+<header>🌴 VIVE — SUMMER CITY</header>
 
 <div id="map"></div>
 
-<!-- Location hotspots -->
-<div id="home" class="location" onclick="openPanel('HOME','Where ideas wake up!')">🏠 Home</div>
-<div id="school" class="location" onclick="openPanel('SCHOOL','Learning & Projects zone')">🏫 School</div>
-<div id="park" class="location" onclick="openPanel('PARK','Creativity chill spot')">🌳 Park</div>
-<div id="mall" class="location" onclick="openPanel('MALL','UI/UX + Merch center')">🛍 Mall</div>
+<div class="car"></div>
 
-<!-- Info panel -->
+<div id="home" class="loc" onclick="openPanel('Home','Work & Portfolio HQ!')">🏠 Home</div>
+<div id="school" class="loc" onclick="openPanel('School','Skills & Learning')">🏫 School</div>
+<div id="park" class="loc" onclick="openPanel('Park','Chill Creative Zone')">🌳 Park</div>
+<div id="mall" class="loc" onclick="openPanel('Mall','UI/UX Projects')">🛍 Mall</div>
+
 <div id="panel">
   <h2 id="pTitle"></h2>
   <p id="pText"></p>
@@ -105,12 +117,15 @@ header{
 </div>
 
 <script>
-// BGM — Summertime vibe
-const bgm = new Audio("https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Komiku/Its_time_for_adventure/Komiku_-_03_-_The_Longest_Year.mp3");
-bgm.loop = true; bgm.volume = 0.45;
-document.body.addEventListener('click',()=>bgm.play(),{once:true});
+// Load background music (replace with your file)
+const bgm = new Audio("music.mp3"); // put audio file in same repo
+bgm.loop = true;
+bgm.volume = 0.5;
 
-// Panel handling
+// Start after first click (browser rule)
+window.addEventListener('click',()=>bgm.play(),{once:true});
+
+// Info Panel
 function openPanel(title,text){
   pTitle.innerText=title;
   pText.innerText=text;
