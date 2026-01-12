@@ -3,265 +3,122 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anush Vive — Interactive Horror Portfolio</title>
+<title>VIVE — Summertime Map Mode</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 body{
-  background:#020617;
-  color:#e2e8f0;
-  font-family:system-ui,sans-serif;
-  overflow-x:hidden;
-  cursor:none;
+  font-family: 'Trebuchet MS', sans-serif;
+  background:#000;
+  overflow:hidden;
 }
 
-/* ---- GAME VFX LAYERS ---- */
-.crt{
-  position:fixed;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,.02)0,
-    rgba(255,255,255,.02)2px,
-    transparent 4px
-  );
-  mix-blend-mode:overlay;
-  z-index:2000;
-}
-.noise{
-  position:fixed;inset:0;pointer-events:none;
-  background:url('https://grainy-gradients.vercel.app/noise.svg');
-  opacity:.15;
-  z-index:1995;
-}
-.fog{
-  position:fixed;inset:0;pointer-events:none;
-  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.05),rgba(0,0,0,.95));
-  opacity:.2;
-  animation:fog 20s infinite alternate;
-  z-index:1990;
-}
-@keyframes fog{
-  from{transform:translate(-10px,-10px);}
-  to{transform:translate(20px,20px);}
-}
-.flashlight{
-  position:fixed;inset:0;pointer-events:none;
-  background:radial-gradient(circle 150px at var(--x,50%) var(--y,50%),
-    rgba(255,255,255,.15)0%,rgba(0,0,0,.9)60%);
-  z-index:1999;
-  transition:background .08s;
-}
-/* faint ghosts */
-.ghost{
+/* Map */
+#map{
   position:fixed;
-  width:120px;height:180px;
-  background:rgba(255,255,255,.05);
-  border-radius:50% 50% 0 0;
-  filter:blur(3px);
-  opacity:.05;
-  pointer-events:none;
+  inset:0;
+  background:url('https://i.imgur.com/iY7K6sq.jpg') center/cover no-repeat;
+  animation:slowpan 60s linear infinite alternate;
 }
-.g1{top:20%;left:10%;}
-.g2{bottom:15%;right:15%;}
-.g3{top:40%;right:5%;}
-
-/* click blood flash */
-#blood{
-  position:fixed;inset:0;
-  background:rgba(255,0,0,.25);
-  opacity:0;
-  pointer-events:none;
-  z-index:3000;
-  transition:opacity .15s;
+@keyframes slowpan{
+  from{transform:scale(1.02) translate(0,0);}
+  to{transform:scale(1.05) translate(-2%, -2%);}
 }
 
-/* jumpscare flash */
-#scare{
-  position:fixed;inset:0;
-  background:url('https://i.imgur.com/O6a8Ffj.png') center/contain no-repeat;
-  opacity:0;
-  pointer-events:none;
-  z-index:3500;
-  transition:opacity .1s;
-}
-
-/* ---- Your Original Styling ---- */
-header{
-  height:100vh;
-  display:grid;
-  place-items:center;
-  text-align:center;
-  position:relative;
-}
-header h1{font-size:4rem;font-weight:700;letter-spacing:.05em;}
-header p{color:#94a3b8;font-size:1.1rem;margin-top:10px;max-width:600px;}
-
-.floating{
+/* Buttons for map locations */
+.location{
   position:absolute;
-  font-size:5rem;
-  opacity:.06;
-  font-weight:900;
-  mix-blend-mode:screen;
-  pointer-events:none;
+  padding:8px 14px;
+  background:#ffffffbb;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.2s;
 }
-.f1{top:10%;left:5%;}
-.f2{bottom:20%;right:15%;}
-.f3{top:30%;right:10%;}
+.location:hover{transform:scale(1.08);background:#fff}
 
-section{
-  padding:90px 20px;
-  max-width:1100px;
-  margin:auto;
-}
-section h2{font-size:2.2rem;margin-bottom:20px;}
-section p{color:#94a3b8;max-width:700px;}
+/* Approx map layout */
+#home{top:60%;left:30%;}
+#school{top:28%;left:62%;}
+#park{top:42%;left:20%;}
+#mall{top:70%;left:70%;}
 
-.cards{
-  margin-top:40px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:25px;
-}
-.card{
-  background:rgba(2,6,23,.8);
-  padding:28px;
-  border-radius:18px;
-  backdrop-filter:blur(6px);
-  border:1px solid rgba(255,255,255,.05);
-  transition:.25s;
-}
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 20px 50px rgba(0,0,0,.4);
-}
-
-footer{
-  padding:60px 20px;
-  text-align:center;
-  color:#64748b;
-  font-size:.9rem;
-}
-
-/* glowing cursor */
-.cursor{
+/* Popup panel */
+#panel{
   position:fixed;
-  width:18px;height:18px;
-  border:2px solid #38bdf8;
-  border-radius:50%;
-  pointer-events:none;
-  transform:translate(-50%,-50%);
-  z-index:4000;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:480px;
+  background:#ffffffdd;
+  padding:20px;
+  border-radius:20px 20px 0 0;
+  text-align:center;
+  color:#111;
+  display:none;
+  animation:slide .4s ease;
 }
-.cursor-trail{
-  position:fixed;width:40px;height:40px;
-  background:rgba(56,189,248,.2);
-  border-radius:50%;
-  pointer-events:none;
-  transform:translate(-50%,-50%);
-  z-index:3999;
+@keyframes slide{from{transform:translate(-50%,100%);}to{transform:translate(-50%,0);}}
+
+/* Close button */
+#close{
+  margin-top:12px;
+  padding:6px 12px;
+  background:#222;
+  color:#fff;
+  border-radius:8px;
+  cursor:pointer;
+}
+#close:hover{background:#000}
+
+/* Title overlay */
+header{
+  position:fixed;
+  top:10px;
+  width:100%;
+  text-align:center;
+  color:#fff;
+  text-shadow:0 0 5px #000;
+  font-size:1.7rem;
+  font-weight:900;
 }
 </style>
 </head>
 <body>
 
-<!-- VFX layers -->
-<div id="blood"></div>
-<div id="scare"></div>
-<div class="fog"></div>
-<div class="ghost g1"></div>
-<div class="ghost g2"></div>
-<div class="ghost g3"></div>
-<div class="flashlight"></div>
-<div class="noise"></div>
-<div class="crt"></div>
+<header>🏖 VIVE — SUMMER CITY</header>
 
-<!-- Cursor -->
-<div class="cursor"></div>
-<div class="cursor-trail"></div>
+<div id="map"></div>
 
-<!-- Your Portfolio -->
-<header>
-  <h1>VIVE</h1>
-  <p><strong>Anush Anirudhan</strong> — where design meets play.<br>
-     Move your mouse — discover my world.</p>
-  <div class="floating f1">CREATOR</div>
-  <div class="floating f2">DESIGN</div>
-  <div class="floating f3">BRAND</div>
-</header>
+<!-- Location hotspots -->
+<div id="home" class="location" onclick="openPanel('HOME','Where ideas wake up!')">🏠 Home</div>
+<div id="school" class="location" onclick="openPanel('SCHOOL','Learning & Projects zone')">🏫 School</div>
+<div id="park" class="location" onclick="openPanel('PARK','Creativity chill spot')">🌳 Park</div>
+<div id="mall" class="location" onclick="openPanel('MALL','UI/UX + Merch center')">🛍 Mall</div>
 
-<section id="about">
-  <h2>About</h2>
-  <p>I craft designs and experiences with precision and intent — now through a playful world that reacts to you.</p>
-</section>
-
-<section id="services">
-  <h2>What I Do</h2>
-  <div class="cards">
-    <div class="card"><h3>UI / UX</h3><p>Modern interfaces built to delight.</p></div>
-    <div class="card"><h3>Websites</h3><p>Fast, responsive, branded and personal.</p></div>
-    <div class="card"><h3>Creative Builds</h3><p>Concept → prototype → polish.</p></div>
-  </div>
-</section>
-
-<section id="contact">
-  <h2>Get in touch</h2>
-  <p><strong>anushvive@gmail.com</strong><br>
-     <strong>creekanubusiness@gmail.com</strong></p>
-</section>
-
-<footer>
-  © 2026 | VIVE — PLAYABLE PORTFOLIO BY ANUSH
-</footer>
+<!-- Info panel -->
+<div id="panel">
+  <h2 id="pTitle"></h2>
+  <p id="pText"></p>
+  <div id="close" onclick="closePanel()">Close</div>
+</div>
 
 <script>
-// Cursor + spotlight
-const cursor=document.querySelector('.cursor');
-const trail=document.querySelector('.cursor-trail');
-const fl=document.querySelector('.flashlight');
-window.addEventListener('mousemove',e=>{
-  cursor.style.left=e.pageX+'px';
-  cursor.style.top=e.pageY+'px';
-  trail.style.left=e.pageX+'px';
-  trail.style.top=e.pageY+'px';
-  fl.style.setProperty('--x',`${e.clientX}px`);
-  fl.style.setProperty('--y',`${e.clientY}px`);
-});
+// BGM — Summertime vibe
+const bgm = new Audio("https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Komiku/Its_time_for_adventure/Komiku_-_03_-_The_Longest_Year.mp3");
+bgm.loop = true; bgm.volume = 0.45;
+document.body.addEventListener('click',()=>bgm.play(),{once:true});
 
-// Floating parallax
-const floats=document.querySelectorAll('.floating');
-window.addEventListener('mousemove',e=>{
-  floats.forEach(el=>{
-    const speed=20;
-    const x=(window.innerWidth/2-e.pageX)/speed;
-    const y=(window.innerHeight/2-e.pageY)/speed;
-    el.style.transform=`translate(${x}px,${y}px)`;
-  });
-});
-
-// Ambient audio
-const audio=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-creepy-ambience-areas-1990.mp3");
-audio.loop=true;audio.volume=.25;
-let started=false;
-window.addEventListener('mousemove',()=>{
-  if(!started){audio.play();started=true;}
-},{once:true});
-
-// Blood flash
-const blood=document.getElementById('blood');
-window.addEventListener('click',()=>{
-  blood.style.opacity=1;
-  setTimeout(()=>blood.style.opacity=0,200);
-});
-
-// Random micro jumpscare
-const scare=document.getElementById('scare');
-setInterval(()=>{
-  if(Math.random()>.98){
-    scare.style.opacity=1;
-    setTimeout(()=>scare.style.opacity=0,120);
-  }
-},1200);
+// Panel handling
+function openPanel(title,text){
+  pTitle.innerText=title;
+  pText.innerText=text;
+  panel.style.display='block';
+}
+function closePanel(){
+  panel.style.display='none';
+}
 </script>
 
 </body>
