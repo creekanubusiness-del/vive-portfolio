@@ -1,63 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Summer Saga Style Map</title>
-<style>
-body {
-  margin:0;
-  overflow:hidden;
-}
-#map {
-  position:absolute;
-  width:200%;
-  height:200%;
-  background:url('map.jpg') center/cover no-repeat;
-  animation: scrollMap 120s linear infinite;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anush Anirudhan — Business & Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0b1120;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
 
-@keyframes scrollMap {
-  from { transform: translate(0,0); }
-  to { transform: translate(-20%, -20%); }
-}
+    header {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    header span {
+      color: #38bdf8;
+    }
+    header p {
+      color: #94a3b8;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 999px;
+      background: #38bdf8;
+      color: #020617;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(56,189,248,0.4);
+    }
 
-.car {
-  position:absolute;
-  width:80px;
-  height:40px;
-  background:url('car.png') center/contain no-repeat;
-  animation: moveCar linear infinite;
-}
+    section {
+      padding: 80px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    section p {
+      color: #94a3b8;
+      max-width: 700px;
+    }
 
-.car:nth-child(1){ top:20%; animation-duration:25s; }
-.car:nth-child(2){ top:40%; animation-duration:30s; }
-.car:nth-child(3){ top:60%; animation-duration:27s; }
-.car:nth-child(4){ top:70%; animation-duration:35s; }
-.car:nth-child(5){ top:85%; animation-duration:32s; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .card {
+      background: #020617;
+      padding: 30px;
+      border-radius: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .card p {
+      font-size: 0.95rem;
+    }
 
-@keyframes moveCar {
-  from { left:-100px; }
-  to { left:110%; }
-}
-</style>
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
-
 <body>
-<div id="map"></div>
 
-<div class="car"></div>
-<div class="car"></div>
-<div class="car"></div>
-<div class="car"></div>
-<div class="car"></div>
+  <!-- Hero -->
+  <header>
+    <div>
+      <h1>Vive</h1>
+      <p><strong>Anush Anirudhan</strong> — Designing what’s requested, with clarity and purpose.</p>
+      <a class="btn" href="#contact">Get in Touch</a>
+    </div>
+  </header>
 
-<script>
-let bgm = new Audio("music.mp3");
-bgm.loop = true;
-bgm.volume = 0.5;
+  <!-- About -->
+  <section id="about">
+    <h2>About</h2>
+    <p>
+      I’m <strong>Vive</strong>, led by Anush Anirudhan. I focus on creating designs exactly as requested — clean, functional, and aligned with real-world needs. My approach is simple: understand the requirement, design precisely for it, and deliver without unnecessary complexity.
+    </p>
+  </section>
 
-window.addEventListener("click",()=>{ bgm.play(); });
-</script>
+  <!-- Services -->
+  <section id="services">
+    <h2>Services</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Custom Design</h3>
+        <p>Designing anything exactly as per client requirements, without overcomplication.</p>
+      </div>
+      <div class="card">
+        <h3>Digital Projects</h3>
+        <p>Clean and modern digital designs suited for business, personal, or product use.</p>
+      </div>
+      <div class="card">
+        <h3>Brand-Oriented Design</h3>
+        <p>Designs that respect brand identity while staying subtle and premium.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <h2>Portfolio</h2>
+    <p>
+      Selected works and projects will appear here. Each project focuses on solving a specific request with a minimal and effective design approach.
+    </p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>You can reach me directly via email:</p>
+    <p>
+      <strong>anushvive@gmail.com</strong><br />
+      <strong>creekanubusiness@gmail.com</strong>
+    </p>
+  </section>
+
+  <footer>
+    © 2026 Anush Anirudhan — Brand: Vive
+  </footer>
 
 </body>
 </html>
