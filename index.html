@@ -1,79 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VIVE — Summer City Portfolio</title>
-
+<meta charset="UTF-8">
+<title>Summer Saga Style Map</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
+body {
+  margin:0;
   overflow:hidden;
-  font-family:sans-serif;
 }
-
-/* Smaller, zoomed-out map */
-#map{
-  position:fixed;
-  inset:0;
-  background:url('map.jpg') center/contain no-repeat;
-  background-size:120%; /* zoomed out compared to cover */
-  animation:pan 90s linear infinite alternate;
-}
-@keyframes pan{
-  from{transform:translate(0,0);}
-  to{transform:translate(-6%, -6%);}
-}
-
-/* Cars */
-.car{
+#map {
   position:absolute;
-  width:60px;
-  height:32px;
+  width:200%;
+  height:200%;
+  background:url('map.jpg') center/cover no-repeat;
+  animation: scrollMap 120s linear infinite;
+}
+
+@keyframes scrollMap {
+  from { transform: translate(0,0); }
+  to { transform: translate(-20%, -20%); }
+}
+
+.car {
+  position:absolute;
+  width:80px;
+  height:40px;
   background:url('car.png') center/contain no-repeat;
-  filter:drop-shadow(0 0 4px #000);
-  animation-timing-function:linear;
+  animation: moveCar linear infinite;
 }
 
-/* 5 cars with different speeds + heights */
-.car1{animation:drive1 25s linear infinite;}
-.car2{animation:drive2 30s linear infinite;}
-.car3{animation:drive3 28s linear infinite;}
-.car4{animation:drive4 32s linear infinite;}
-.car5{animation:drive5 35s linear infinite;}
+.car:nth-child(1){ top:20%; animation-duration:25s; }
+.car:nth-child(2){ top:40%; animation-duration:30s; }
+.car:nth-child(3){ top:60%; animation-duration:27s; }
+.car:nth-child(4){ top:70%; animation-duration:35s; }
+.car:nth-child(5){ top:85%; animation-duration:32s; }
 
-@keyframes drive1{
-  0%{left:-15%;top:68%;}
-  50%{left:115%;top:66%;}
-  100%{left:-15%;top:68%;}
+@keyframes moveCar {
+  from { left:-100px; }
+  to { left:110%; }
 }
-@keyframes drive2{
-  0%{left:-15%;top:63%;}
-  50%{left:115%;top:61%;}
-  100%{left:-15%;top:63%;}
-}
-@keyframes drive3{
-  0%{left:-15%;top:58%;}
-  50%{left:115%;top:55%;}
-  100%{left:-15%;top:58%;}
-}
-@keyframes drive4{
-  0%{left:115%;top:72%;transform:scaleX(-1);} /* reverse direction */
-  50%{left:-15%;top:70%;transform:scaleX(-1);}
-  100%{left:115%;top:72%;transform:scaleX(-1);}
-}
-@keyframes drive5{
-  0%{left:115%;top:52%;transform:scaleX(-1);}
-  50%{left:-15%;top:50%;transform:scaleX(-1);}
-  100%{left:115%;top:52%;transform:scaleX(-1);}
-}
+</style>
+</head>
 
-/* Location buttons */
-.loc{
-  position:absolute;
-  padding:10px 14px;
-  background:#ffffffcc;
-  border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
-  tran
+<body>
+<div id="map"></div>
+
+<div class="car"></div>
+<div class="car"></div>
+<div class="car"></div>
+<div class="car"></div>
+<div class="car"></div>
+
+<script>
+let bgm = new Audio("music.mp3");
+bgm.loop = true;
+bgm.volume = 0.5;
+
+window.addEventListener("click",()=>{ bgm.play(); });
+</script>
+
+</body>
+</html>
