@@ -12,31 +12,60 @@ body{
   font-family:sans-serif;
 }
 
-/* Map (placeholder) — replace with SS map */
+/* Smaller, zoomed-out map */
 #map{
   position:fixed;
   inset:0;
-  background:url('Map.jpg') center/cover no-repeat;
-  animation:pan 50s linear infinite alternate;
+  background:url('map.jpg') center/contain no-repeat;
+  background-size:120%; /* zoomed out compared to cover */
+  animation:pan 90s linear infinite alternate;
 }
 @keyframes pan{
-  from{transform:scale(1) translate(0,0);}
-  to{transform:scale(1.05) translate(-3%, -3%);}
+  from{transform:translate(0,0);}
+  to{transform:translate(-6%, -6%);}
 }
 
-/* Moving car */
+/* Cars */
 .car{
   position:absolute;
   width:60px;
-  height:30px;
-  background:url('https://i.imgur.com/GT3u7dW.png') center/contain no-repeat;
-  animation:drive 12s linear infinite;
+  height:32px;
+  background:url('car.png') center/contain no-repeat;
   filter:drop-shadow(0 0 4px #000);
+  animation-timing-function:linear;
 }
-@keyframes drive{
-  0%{left:-10%;top:65%;}
-  50%{left:110%;top:62%;}
-  100%{left:-10%;top:65%;}
+
+/* 5 cars with different speeds + heights */
+.car1{animation:drive1 25s linear infinite;}
+.car2{animation:drive2 30s linear infinite;}
+.car3{animation:drive3 28s linear infinite;}
+.car4{animation:drive4 32s linear infinite;}
+.car5{animation:drive5 35s linear infinite;}
+
+@keyframes drive1{
+  0%{left:-15%;top:68%;}
+  50%{left:115%;top:66%;}
+  100%{left:-15%;top:68%;}
+}
+@keyframes drive2{
+  0%{left:-15%;top:63%;}
+  50%{left:115%;top:61%;}
+  100%{left:-15%;top:63%;}
+}
+@keyframes drive3{
+  0%{left:-15%;top:58%;}
+  50%{left:115%;top:55%;}
+  100%{left:-15%;top:58%;}
+}
+@keyframes drive4{
+  0%{left:115%;top:72%;transform:scaleX(-1);} /* reverse direction */
+  50%{left:-15%;top:70%;transform:scaleX(-1);}
+  100%{left:115%;top:72%;transform:scaleX(-1);}
+}
+@keyframes drive5{
+  0%{left:115%;top:52%;transform:scaleX(-1);}
+  50%{left:-15%;top:50%;transform:scaleX(-1);}
+  100%{left:115%;top:52%;transform:scaleX(-1);}
 }
 
 /* Location buttons */
@@ -47,94 +76,4 @@ body{
   border-radius:10px;
   font-weight:bold;
   cursor:pointer;
-  transition:.2s;
-}
-.loc:hover{transform:scale(1.1);background:#fff}
-
-/* Positions (rough) */
-#home{top:70%;left:30%;}
-#school{top:45%;left:65%;}
-#mall{top:60%;left:75%;}
-#park{top:40%;left:20%;}
-
-/* Popup */
-#panel{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:95%;
-  max-width:430px;
-  background:#fff;
-  border-radius:18px 18px 0 0;
-  text-align:center;
-  padding:20px;
-  display:none;
-  animation:slide .35s ease;
-}
-@keyframes slide{
-  from{transform:translate(-50%,100%);}
-  to{transform:translate(-50%,0);}
-}
-#close{
-  margin-top:12px;
-  padding:6px 12px;
-  background:#222;
-  color:#fff;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-header{
-  position:fixed;
-  top:12px;
-  width:100%;
-  text-align:center;
-  color:#fff;
-  font-size:1.8rem;
-  font-weight:900;
-  text-shadow:0 2px 5px #000;
-}
-</style>
-</head>
-<body>
-
-<header>🌴 VIVE — SUMMER CITY</header>
-
-<div id="map"></div>
-
-<div class="car"></div>
-
-<div id="home" class="loc" onclick="openPanel('Home','Work & Portfolio HQ!')">🏠 Home</div>
-<div id="school" class="loc" onclick="openPanel('School','Skills & Learning')">🏫 School</div>
-<div id="park" class="loc" onclick="openPanel('Park','Chill Creative Zone')">🌳 Park</div>
-<div id="mall" class="loc" onclick="openPanel('Mall','UI/UX Projects')">🛍 Mall</div>
-
-<div id="panel">
-  <h2 id="pTitle"></h2>
-  <p id="pText"></p>
-  <div id="close" onclick="closePanel()">Close</div>
-</div>
-
-<script>
-// Load background music (replace with your file)
-const bgm = new Audio("music.mp3"); // put audio file in same repo
-bgm.loop = true;
-bgm.volume = 0.5;
-
-// Start after first click (browser rule)
-window.addEventListener('click',()=>bgm.play(),{once:true});
-
-// Info Panel
-function openPanel(title,text){
-  pTitle.innerText=title;
-  pText.innerText=text;
-  panel.style.display='block';
-}
-function closePanel(){
-  panel.style.display='none';
-}
-</script>
-
-</body>
-</html>
+  tran
